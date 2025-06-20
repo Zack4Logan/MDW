@@ -1,0 +1,134 @@
+CREATE DATABASE IF NOT EXISTS transporte_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE transporte_db;
+
+-- -----------------------------------------------------
+-- Tablas base y de configuración (Lookups)
+-- -----------------------------------------------------
+
+CREATE TABLE PERSONA (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    dni CHAR(8) NOT NULL UNIQUE
+);
+
+CREATE TABLE TIPO_USUARIO (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE AREA (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE TURNO (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(100),
+    hora_inicio TIME NOT NULL,
+    hora_final TIME NOT NULL
+);
+
+CREATE TABLE RUTAS (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    origen VARCHAR(255) NOT NULL,
+    destino VARCHAR(255) NOT NULL,
+    costo_referencial DECIMAL(8, 2) COMMENT 'Costo base que puede variar por temporada o viaje'
+);
+
+CREATE TABLE BUSES (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    placa VARCHAR(10) NOT NULL UNIQUE,
+    fabricante VARCHAR(100),
+    num_asientos INT NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Operativo' COMMENT 'Operativo, Mantenimiento, etc.'
+);
+
+-- -----------------------------------------------------
+-- Tablas de Entidades Principales (Personas, Contratos)
+-- -----------------------------------------------------
+
+CREATE TABLE CLIENTE (
+    codigo INT PRIMARY KEY,
+    razon_social VARCHAR(255),
+    ruc CHAR(11) UNIQUE,
+    FOREIGN KEY (codigo) REFERENCES PERSONA(codigo) ON DELETE CASCADE
+);
+
+CREATE TABLE CARGO (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL,
+    area_codigo INT NOT NULL,
+    FOREIGN KEY (area_codigo) REFERENCES AREA(codigo)
+);
+
+CREATE TABLE CONTRATO (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_inicio DATE NOT NULL,
+    sueldo DECIMAL(10, 2) NOT NULL,
+    turno_codigo INT NOT NULL,
+    FOREIGN KEY (turno_codigo) REFERENCES TURNO(codigo)
+);
+
+CREATE TABLE EMPLEADO (
+    codigo INT PRIMARY KEY,
+    direccion VARCHAR(255),
+    telefono VARCHAR(20),
+    email VARCHAR(100) UNIQUE,
+    contrato_codigo INT UNIQUE,
+    cargo_codigo INT NOT NULL,
+    FOREIGN KEY (codigo) REFERENCES PERSONA(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (cargo_codigo) REFERENCES CARGO(codigo),
+    FOREIGN KEY (contrato_codigo) REFERENCES CONTRATO(codigo)
+);
+
+CREATE TABLE CHOFER (
+    codigo INT PRIMARY KEY,
+    licencia VARCHAR(50) NOT NULL UNIQUE,
+    FOREIGN KEY (codigo) REFERENCES EMPLEADO(codigo) ON DELETE CASCADE
+);
+
+CREATE TABLE USUARIOS (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    clave VARCHAR(255) NOT NULL COMMENT 'Guardar siempre contraseñas hasheadas',
+    estado VARCHAR(20) DEFAULT 'activo',
+    empleado_codigo INT NOT NULL,
+    tipo_usuario_codigo INT NOT NULL,
+    FOREIGN KEY (empleado_codigo) REFERENCES EMPLEADO(codigo),
+    FOREIGN KEY (tipo_usuario_codigo) REFERENCES TIPO_USUARIO(codigo)
+);
+
+-- -------------------------------------------------------------------
+-- TABLA CENTRAL: VIAJE
+-- -------------------------------------------------------------------
+CREATE TABLE VIAJE (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_hora_salida DATETIME NOT NULL,
+    fecha_hora_llegada_estimada DATETIME NOT NULL,
+    estado VARCHAR(50) NOT NULL COMMENT 'Programado, En Curso, Finalizado, Cancelado',
+    ruta_codigo INT NOT NULL,
+    bus_codigo INT NOT NULL,
+    chofer_codigo INT NOT NULL,
+    FOREIGN KEY (ruta_codigo) REFERENCES RUTAS(codigo),
+    FOREIGN KEY (bus_codigo) REFERENCES BUSES(codigo),
+    FOREIGN KEY (chofer_codigo) REFERENCES CHOFER(codigo)
+);
+
+-- -------------------------------------------------------------------
+-- Tabla de Transacciones: PASAJE
+-- -------------------------------------------------------------------
+CREATE TABLE PASAJE (
+    codigo INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_emision DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    asiento INT NOT NULL,
+    importe_pagar DECIMAL(8, 2) NOT NULL,
+    estado VARCHAR(20) DEFAULT 'Vendido' COMMENT 'Vendido, Cancelado, No Show',
+    viaje_codigo INT NOT NULL,
+    cliente_codigo INT NOT NULL,
+    usuario_vendedor_codigo INT NOT NULL,
+    UNIQUE(viaje_codigo, asiento),
+    FOREIGN KEY (viaje_codigo) REFERENCES VIAJE(codigo),
+    FOREIGN KEY (cliente_codigo) REFERENCES CLIENTE(codigo),
+    FOREIGN KEY (usuario_vendedor_codigo) REFERENCES USUARIOS(codigo)
+);
