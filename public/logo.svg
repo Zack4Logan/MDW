@@ -1,0 +1,49 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular con gradiente -->
+  <circle cx="60" cy="60" r="58" fill="url(#gradient1)" stroke="url(#gradient2)" stroke-width="4"/>
+  
+  <!-- Bus principal -->
+  <rect x="25" y="45" width="70" height="30" rx="8" fill="#ffffff" opacity="0.95"/>
+  
+  <!-- Ventanas del bus -->
+  <rect x="30" y="50" width="8" height="8" rx="2" fill="#0d2c4e"/>
+  <rect x="42" y="50" width="8" height="8" rx="2" fill="#0d2c4e"/>
+  <rect x="54" y="50" width="8" height="8" rx="2" fill="#0d2c4e"/>
+  <rect x="66" y="50" width="8" height="8" rx="2" fill="#0d2c4e"/>
+  <rect x="78" y="50" width="8" height="8" rx="2" fill="#0d2c4e"/>
+  
+  <!-- Puerta del bus -->
+  <rect x="30" y="62" width="6" height="10" rx="1" fill="#e3a518"/>
+  
+  <!-- Ruedas -->
+  <circle cx="35" cy="78" r="6" fill="#0d2c4e"/>
+  <circle cx="35" cy="78" r="3" fill="#e3a518"/>
+  <circle cx="85" cy="78" r="6" fill="#0d2c4e"/>
+  <circle cx="85" cy="78" r="3" fill="#e3a518"/>
+  
+  <!-- Líneas de movimiento -->
+  <path d="M15 35 L25 35" stroke="#e3a518" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 40 L20 40" stroke="#e3a518" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 30 L20 30" stroke="#e3a518" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Montañas del norte -->
+  <path d="M20 25 L30 15 L40 25 L50 15 L60 25 L70 15 L80 25 L90 15 L100 25" 
+        stroke="#0d2c4e" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- Texto NORTE -->
+  <text x="60" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#0d2c4e">NORTE</text>
+  <text x="60" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#e3a518">EXPRESO</text>
+  
+  <!-- Gradientes -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d2c4e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d2c4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e3a518;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
