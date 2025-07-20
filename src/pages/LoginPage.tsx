@@ -33,7 +33,7 @@ export function LoginPage() {
 
     try {
       if (mode === 'login') {
-        // Login solo cliente
+        // Login solo para cliente 
         const success = await login(formData.email, formData.password, 'customer');
         if (success) {
           navigate('/loyalty', { replace: true });
@@ -41,7 +41,7 @@ export function LoginPage() {
           setError('Usuario o contraseña incorrectos');
         }
       } else {
-        // Registro solo cliente
+        //Resgistro de solo cliente
         const result = await registerCustomer({
           nombre: formData.nombre,
           apellidos: formData.apellidos,

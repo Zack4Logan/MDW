@@ -1,70 +1,73 @@
+/* Importa las capas base, componentes y utilidades de Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Personalizaciones de estilos base */
 @layer base {
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif; /* Fuente principal */
   }
   
   body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
   }
 
-  /* Mejoras para modo oscuro */
+  /* Soporte para modo oscuro */
   .dark {
     color-scheme: dark;
   }
 
-  /* Scrollbar personalizado */
+  /* Scrollbar personalizado para navegadores Webkit */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-800;
+    @apply bg-gray-100 dark:bg-gray-800; /* Color de fondo del track */
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full; /* Color y forma del thumb */
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-gray-500;
+    @apply bg-gray-400 dark:bg-gray-500; /* Color al pasar el mouse */
   }
 
-  /* Transiciones suaves para modo oscuro */
+  /* Transiciones suaves para cambios de color y fondo */
   * {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 }
 
+/* Utilidades personalizadas */
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-in-out;
+    animation: fadeIn 0.6s ease-in-out; /* Animación de aparición */
   }
   
   .animate-slide-up {
-    animation: slideUp 0.4s ease-out;
+    animation: slideUp 0.4s ease-out; /* Animación de deslizamiento hacia arriba */
   }
   
   .animate-bounce-subtle {
-    animation: bounceSubtle 2s infinite;
+    animation: bounceSubtle 2s infinite; /* Rebote suave */
   }
 
   .animate-pulse-slow {
-    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* Pulso lento */
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite; /* Flotación suave */
   }
 
   .glass-effect {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Efecto de vidrio borroso */
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
@@ -75,18 +78,20 @@
   }
 
   .gradient-text {
+    /* Texto con gradiente de color */
     @apply bg-gradient-to-r from-azul-oscuro to-primary-600 dark:from-amarillo-dorado dark:to-yellow-500 bg-clip-text text-transparent;
   }
 
   .shadow-glow {
-    box-shadow: 0 0 20px rgba(13, 44, 78, 0.3);
+    box-shadow: 0 0 20px rgba(13, 44, 78, 0.3); /* Sombra con brillo azul */
   }
 
   .dark .shadow-glow {
-    box-shadow: 0 0 20px rgba(227, 165, 24, 0.3);
+    box-shadow: 0 0 20px rgba(227, 165, 24, 0.3); /* Sombra con brillo dorado en modo oscuro */
   }
 }
 
+/* Definición de animaciones personalizadas */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -127,26 +132,27 @@
   }
 }
 
-/* Mejoras para formularios */
+/* Estilos para formularios: resalta el borde al enfocar */
 input:focus, select:focus, textarea:focus {
   @apply ring-2 ring-azul-oscuro dark:ring-amarillo-dorado ring-opacity-50;
 }
 
-/* Mejoras para botones */
+/* Estilos para botones principales */
 .btn-primary {
   @apply bg-gradient-to-r from-azul-oscuro to-primary-600 dark:from-amarillo-dorado dark:to-yellow-500 text-white dark:text-azul-oscuro font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
 }
 
+/* Estilos para botones secundarios */
 .btn-secondary {
   @apply bg-white dark:bg-gray-800 text-azul-oscuro dark:text-white border-2 border-azul-oscuro dark:border-amarillo-dorado font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl hover:bg-azul-oscuro hover:text-white dark:hover:bg-amarillo-dorado dark:hover:text-azul-oscuro transform hover:scale-105 transition-all duration-300;
 }
 
-/* Mejoras para cards */
+/* Estilos para tarjetas (cards) */
 .card {
   @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
 }
 
-/* Mejoras para el modo oscuro */
+/* Fondo y texto para modo oscuro */
 .dark body {
   @apply bg-gray-900 text-white;
 }
@@ -160,7 +166,7 @@ input:focus, select:focus, textarea:focus {
   @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
 }
 
-/* Gradientes personalizados */
+/* Gradientes personalizados para fondos */
 .gradient-bg {
   background: linear-gradient(135deg, #0d2c4e 0%, #1e3a8a 50%, #e3a518 100%);
 }
@@ -169,7 +175,7 @@ input:focus, select:focus, textarea:focus {
   background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #e3a518 100%);
 }
 
-/* Efectos de brillo */
+/* Efectos de brillo para elementos destacados */
 .glow-effect {
   box-shadow: 0 0 30px rgba(227, 165, 24, 0.4);
 }
